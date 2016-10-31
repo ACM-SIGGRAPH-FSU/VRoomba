@@ -33,22 +33,23 @@ python vroomba.py
 we should be able to listen for and respond to commands!
 
 ## Usage and Config
-Using the bot is as easy as getting in it's @mentions... Configuring it will take a bit of coding.
+Using the bot is as easy as getting in it's @mentions with the first word after `@vroomba` being a command it understands... Configuring it will take a bit of coding.
 
-Thankfully, we've made it pretty painless. Add a string under the comment labeled `constants`. Then, within the `handle_command` function, add another case for the command starting with your new string. Call a different function (which should return a string) or return a string.
+Thankfully, we've made it pretty painless. Add a string to the `COMMANDS` dict (if you don't add your commands to the `COMMANDS` dict, the `help` command won't auto-magically list them). Then, within the `handle_command` function, add another case for the command starting with your new string. Change the response string or call a function (that should return a string value for the response).
 
 Current commands look a bit like this:
 ```python
 # constants
-SALUTAION = "hello"
-MILESTONES = "list dates"
-HELP = "help"
+COMMANDS = {
+    'SALUTATION': ' hey',
+    'HELP_COMMAND': ' help'
+}
 ...
 def handle_command(command, channel):
 ...
     response = "Default reponse"
-    if command.startswith(SALUTATION):
-      response = "Hello!"
+    if command.startswith(COMMANDS['SALUTATION']):
+      response = "Hello! :smile:"
 ...
     slack_client.api_call("chat.postMessage", channel=channel, text=response,
                           as_user=True)

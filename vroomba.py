@@ -7,8 +7,12 @@ BOT_ID = os.environ.get("BOT_ID")
 
 # constants
 AT_BOT = "<@" + BOT_ID + ">"
-URBAN_SALUTATION = " yo"
-HELP_COMMAND = " help"
+COMMANDS = {
+    'URBAN_SALUTATION': ' yo',
+    'HELP_COMMAND': ' help',
+    'SLASH_LIST': ' slash',
+    'HELPFUL_LINKS': ' link'
+}
 
 # instantiate Slack client
 slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
@@ -20,10 +24,17 @@ def handle_command(command, channel):
     """
     response = "Not sure what you mean, human."
     print command + " " + channel
-    if command.startswith(URBAN_SALUTATION):
+
+    if command.startswith(COMMANDS['URBAN_SALUTATION']):
         response = "Ayyyyy! :kylo:"
-    elif command.startswith(HELP_COMMAND):
-        response = "The only current commands are *yo* and *help*"
+    elif command.startswith(COMMANDS['HELP_COMMAND']):
+        response = "The only current commands are: *" + "*, *".join(COMMANDS.values()) + "*."
+    elif command.startswith(COMMANDS['SLASH_LIST']):
+        response = "Here's a list of official slash commands! https://get.slack.help/hc/en-us/articles/201259356-Slash-commands"
+    elif command.startswith(COMMANDS['HELPFUL_LINKS']):
+        response = "Here's a list of links associated with the VR Hackathon... tbd"
+
+
     slack_client.api_call("chat.postMessage", channel=channel, text=response,
                             as_user=True)
 
