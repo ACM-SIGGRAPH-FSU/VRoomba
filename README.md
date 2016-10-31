@@ -22,10 +22,15 @@ Once you've installed the slackclient library and setup your environment variabl
 ```
 python print_bot_id.py
 ```
-Now we'll set an environment variable for the Bot's ID and we should be able to listen for and respond to commands!
+Now we'll set an environment variable for the Bot's ID:
 ```
 export BOT_ID='id returned by script'
 ```
+And after running:
+```
+python vroomba.py
+```
+we should be able to listen for and respond to commands!
 
 ## Usage and Config
 Using the bot is as easy as getting in it's @mentions... Configuring it will take a bit of coding.
@@ -34,6 +39,11 @@ Thankfully, we've made it pretty painless. Add a string under the comment labele
 
 Current commands look a bit like this:
 ```python
+# constants
+SALUTAION = "hello"
+MILESTONES = "list dates"
+HELP = "help"
+...
 def handle_command(command, channel):
 ...
     response = "Default reponse"
