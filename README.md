@@ -1,2 +1,45 @@
 # VRoomba
 Cleans stuff up, like a Roomba. Except, virtually and not really in reality...
+
+
+## Features
+* Based on [Slack's RTM API](https://api.slack.com/rtm)
+* Uses Python based [slackclient](https://github.com/slackhq/python-slackclient)
+* No actual, current features
+* Some sort of onboarding
+* Some sort of guidance for new users outside of prelimenary info
+
+## Installation
+The only dependencies are the slackclient library which can be installed via the following command:
+```
+pip install slackclient
+```
+You'll also need to create environment variables for the Bot's API Token:
+```
+export SLACK_BOT_TOKEN='get this token from the maintainer'
+```
+Once you've installed the slackclient library and setup your environment variable, we can now get the Bot ID for VRoomba and be on our way!
+```
+python print_bot_id.py
+```
+Now we'll set an environment variable for the Bot's ID and we should be able to listen for and respond to commands!
+```
+export BOT_ID='id returned by script'
+```
+
+## Usage and Config
+Using the bot is as easy as getting in it's @mentions... Configuring it will take a bit of coding.
+
+Thankfully, we've made it pretty painless. Add a string under the comment labeled `constants`. Then, within the `handle_command` function, add another case for the command starting with your new string. Call a different function (which should return a string) or return a string.
+
+Current commands look a bit like this:
+```python
+def handle_command(command, channel):
+...
+    response = "Default reponse"
+    if command.startswith(SALUTATION):
+      response = "Hello!"
+...
+    slack_client.api_call("chat.postMessage", channel=channel, text=response,
+                          as_user=True)
+```
