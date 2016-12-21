@@ -17,6 +17,20 @@ COMMANDS = {
 # instantiate Slack client
 slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
 
+# command functions
+def urban_salutation():
+    return "Ayyyyyy! :kylo:"
+
+def help_command():
+    return "The only current commands are: *" + "*, *".join(COMMANDS.values()) + "*."
+
+def slash_list():
+    return "Here's a list of official slash commands! https://get.slack.help/hc/en-us/articles/201259356-Slash-commands"
+
+def helpful_links():
+    return "Here's a list of links associated with the VR Hackathon... tbd"
+
+
 def handle_command(command, channel):
     """
         Receives commands directed at the bot and determines if they are valid.
@@ -26,13 +40,13 @@ def handle_command(command, channel):
     print command + " " + channel
 
     if command.startswith(COMMANDS['URBAN_SALUTATION']):
-        response = "Ayyyyy! :kylo:"
+        response = urban_salutation()
     elif command.startswith(COMMANDS['HELP_COMMAND']):
-        response = "The only current commands are: *" + "*, *".join(COMMANDS.values()) + "*."
+        response = help_command()
     elif command.startswith(COMMANDS['SLASH_LIST']):
-        response = "Here's a list of official slash commands! https://get.slack.help/hc/en-us/articles/201259356-Slash-commands"
+        response = slash_list()
     elif command.startswith(COMMANDS['HELPFUL_LINKS']):
-        response = "Here's a list of links associated with the VR Hackathon... tbd"
+        response = helpful_links()
 
 
     slack_client.api_call("chat.postMessage", channel=channel, text=response,
